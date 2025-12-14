@@ -1,0 +1,92 @@
+'use client'
+export default function LocalLeadAI() {
+const [phone, setPhone] = useState('')
+const [message, setMessage] = useState('')
+const [status, setStatus] = useState('')
+
+
+async function sendSMS() {
+setStatus('Sending…')
+const res = await fetch('/api/send-sms', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ phone, message })
+})
+
+
+if (res.ok) setStatus('Message sent ✅')
+else setStatus('Failed ❌')
+}
+
+
+return (
+<div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+<Card className="w-full max-w-md rounded-2xl shadow-lg">
+<CardContent className="p-6 space-y-4">
+<h1 className="text-2xl font-bold">LocalLead AI</h1>
+<p className="text-sm text-gray-600">
+Instantly text missed calls & follow up on quotes.
+</p>
+
+
+<Input
+placeholder="Customer phone number"
+value={phone}
+onChange={(e) => setPhone(e.target.value)}
+/>
+
+
+<Input
+placeholder="Message"
+value={message}
+onChange={(e) => setMessage(e.target.value)}
+/>
+
+
+<Button onClick={sendSMS} className="w-full">
+Send SMS
+</Button>
+
+
+{status && <p className="text-sm">{status}</p>}
+</CardContent>
+</Card>
+</div>
+)
+}
+
+
+// ================= API ROUTE =================
+// /app/api/send-sms/route.ts
+
+
+import { NextResponse } from 'next/server'
+import twilio from 'twilio'
+
+
+export async function POST(req: Request) {
+const { phone, message } = await req.json()
+
+
+const client = twilio(
+process.env.TWILIO_SID,
+process.env.TWILIO_AUTH_TOKEN
+)
+
+
+await client.messages.create({
+from: process.env.TWILIO_PHONE,
+to: phone,
+body: message
+})
+
+
+return NextResponse.json({ success: true })
+}
+
+
+// ================= ENV VARS =================
+// TWILIO_SID=
+// TWILIO_AUTH_TOKEN=
+// TWILIO_PHONE=
+// STRIPE_SECRET_KEY=
