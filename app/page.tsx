@@ -5,17 +5,24 @@ import { useState } from "react";
 export default function Home() {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
-
-  const sendSMS = async () => {
+const sendSMS = async () => {
   alert("Button clicked");
 
-  fetch("/api/sms", {
+  const res = await fetch("/api/sms", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ test: "ping" }),
+    body: JSON.stringify({
+      to,
+      message,
+    }),
   });
+
+  const data = await res.json();
+  console.log("API response:", data);
+};
+
 };
 
   return (
