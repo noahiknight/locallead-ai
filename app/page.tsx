@@ -7,17 +7,16 @@ export default function Home() {
   const [message, setMessage] = useState("");
 
   const sendSMS = async () => {
-    const res = await fetch("/api/sms", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ to, message }),
-    });
+  alert("Button clicked");
 
-    const data = await res.json();
-    console.log(data);
-  };
+  fetch("/api/sms", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ test: "ping" }),
+  });
+};
 
   return (
     <main style={{ padding: 20 }}>
