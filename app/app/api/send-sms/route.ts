@@ -1,3 +1,5 @@
-export async function POST() {
-  return new Response("POST WORKS", { status: 200 });
+import { NextResponse } from "next/server";
+
+export async function POST(request: Request) {
+  return NextResponse.json({ message: "POST WORKS" });
 }
