@@ -27,7 +27,8 @@ export default async function handler(
 
     res.status(200).json({ success: true, sid: msg.sid });
   } catch (err: any) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
+  console.error("TWILIO ERROR:", err);
+  return res.status(500).json({ error: err.message || err });
+}
+
 }
