@@ -46,7 +46,20 @@ const sendSMS = async () => {
 
       <br /><br />
 
-      <button onClick={sendSMS}>Send SMS</button>
+      const sendSms = async () => {
+  console.log("🚨 BUTTON CLICKED");
+
+  await fetch("/api/send-sms", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      to: "+15555555555",
+      message: "test message"
+    })
+  });
+
+  alert("Fetch sent");
+};
     </main>
   );
 }
