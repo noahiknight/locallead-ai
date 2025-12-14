@@ -24,7 +24,6 @@ const sendSMS = async () => {
   console.log("API response:", data);
 };
 
-};
 
   return (
     <main style={{ padding: 20 }}>
