@@ -8,7 +8,8 @@ export default function Home() {
 const sendSMS = async () => {
   alert("Button clicked");
 
-  const res = await fetch("/api/sms", {
+  const res = await fetch("/api/send-sms", {
+
     method: "POST",
     headers: {
       "Content-Type": "application/json",
