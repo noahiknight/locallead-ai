@@ -1,19 +1,10 @@
-import { NextResponse } from 'next/server'
-import twilio from 'twilio'
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { phone, message } = await req.json()
+  console.log("🔥 POST /api/sms HIT");
 
-  const client = twilio(
-    process.env.TWILIO_SID,
-    process.env.TWILIO_AUTH_TOKEN
-  )
+  const body = await req.json();
+  console.log("BODY:", body);
 
-  await client.messages.create({
-    from: process.env.TWILIO_PHONE,
-    to: phone,
-    body: message
-  })
-
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true });
 }
